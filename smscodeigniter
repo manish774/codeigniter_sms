@@ -1,0 +1,35 @@
+-----------------------------------------controller--------------------------------
+Controller
+
+	public function message(){
+	  $message      = "your message";
+    $mobile_no    = "999999****";
+    $subject      = "your subject";
+    $this->model_sms->Sendemails($mobile_no, $subject,  $message);
+  }
+
+-------------------------------------------------------------------------------------------------------
+--------------- !Model: Model_sms.php ! ---------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+
+public function Sendemails($mobile_no,$subject,$message){
+		$config = Array(
+		    'protocol' => 'smtp',// or mail on server
+		    'smtp_host' => 'ssl://smtp.googlemail.com',
+		    'smtp_port' => 465, 
+		    'smtp_user' => 'youremail@gmail.com',
+		    'smtp_pass' => '**********',
+		    'mailtype'  => 'html',
+		    'charset'   => 'iso-8859-1'
+
+		);
+		$this->load->library('email', $config);
+		$this->email->from('kickkare@gmail.com', 'KickKare');
+		$this->email->to($tosent);
+		$this->email->subject($subject);
+		$this->email->message($message);
+		$this->email->set_newline("\r\n");
+		$this->email->send();
+		echo $this->email->print_debugger();
+
+	}
